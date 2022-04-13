@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import { FlatList, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
 import FetchByUseEffect from '../components/FetchByUseEffect';
@@ -46,7 +46,11 @@ const Home = ({navigation}) => {
                
                 refreshing={refreshing}
                 onRefresh ={onRefresh}      
-
+                ListHeaderComponent={
+                    <TouchableOpacity onPress={() => {navigation.navigate('ColorPaletteModal')}}>
+                        <Text>Launch Modal</Text>
+                    </TouchableOpacity>
+                }
             />
             <Counter />
             <FetchByUseEffect style={styles.box}/>
