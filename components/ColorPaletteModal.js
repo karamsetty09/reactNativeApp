@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { TouchableOpacity, FlatList, StyleSheet, View, Text, TextInput, Alert } from "react-native";
-import { Switch } from 'react-native-gesture-handler';
+import { TouchableOpacity, Switch, FlatList, StyleSheet, View, Text, TextInput, Alert } from "react-native";
 
 const COLORS = [
     { colorName: 'AliceBlue', hexCode: '#F0F8FF' },
@@ -152,12 +151,17 @@ const COLORS = [
     { colorName: 'YellowGreen', hexCode: '#9ACD' },
 ];
 
-const ColorPaletteModal = () => {
+const ColorPaletteModal = ({ navigation, route }) => {
     const [name, setName] = useState("");
-
     const handleSubmit = useCallback(()=>{
         if(!name){
             Alert.alert('Please enter a palette name');
+        } else {
+            const newColorPalette = {
+                paletteName: name,
+                colors: [],
+            }
+            navigation.navigate('Home', {newColorPalette});
         }
     },[name]);
 
@@ -172,18 +176,16 @@ const ColorPaletteModal = () => {
                 value={name}
                 />
 
-            {/* <FlatList
+            <FlatList
                 data={COLORS}
                 keyExtractor={item => item.colorName}
-                renderItem={({ item }) => <Text style={styles.text}>{item.colorName}
-                <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}        
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-                />
-                </Text>}
-            /> */}
+                renderItem={({ item }) => (
+                    <View style={styles.color}>
+                        <Text>Color Name</Text>
+                        <Switch value={true} onValueChange={()=>{}}/>
+                    </View>
+                )} 
+            />            
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
@@ -220,6 +222,14 @@ const styles = StyleSheet.create({
     },
     name: {
         marginBottom: 10,
+    },
+    color: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
     }
 });
 

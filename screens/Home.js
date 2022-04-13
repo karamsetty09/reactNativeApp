@@ -4,9 +4,11 @@ import PalettePreview from '../components/PalettePreview';
 import Counter from '../components/Counter';
 import FetchByUseEffect from '../components/FetchByUseEffect';
 
-const Home = ({navigation}) => {
+const Home = ({navigation, route }) => {
     const [colorPalettes, setColorPalettes] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+
+    const newColorPalette = route.params ? route.params.newColorPalette : undefined ;
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -29,6 +31,12 @@ const Home = ({navigation}) => {
         fetchColors()
     },[]);
 
+    useEffect(() => {
+        if(newColorPalette){
+            setColorPalettes(palettes => [newColorPalette, ...palettes])
+        }
+    },[newColorPalette]);
+
     return (
         <SafeAreaView>
             <FlatList
@@ -48,7 +56,7 @@ const Home = ({navigation}) => {
                 onRefresh ={onRefresh}      
                 ListHeaderComponent={
                     <TouchableOpacity onPress={() => {navigation.navigate('ColorPaletteModal')}}>
-                        <Text>Add a color scheme</Text>
+                        <Text style={styles.buttonText}>Add a color scheme</Text>
                     </TouchableOpacity>
                 }
             />
@@ -65,6 +73,12 @@ const styles = StyleSheet.create({
     },
     box: {
         height: 200,
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'teal',
+        marginBottom: 10,
     }
 })
 
