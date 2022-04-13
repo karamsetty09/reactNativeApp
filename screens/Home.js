@@ -1,6 +1,8 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, SafeAreaView, } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
+import Counter from '../components/Counter';
+import FetchByUseEffect from '../components/FetchByUseEffect';
 
 const SOLARIZED = [
     { colorName: 'Base03', hexCode: '#002b36' },
@@ -45,19 +47,24 @@ const COLOR_PALETTES = [
 
 const Home = ({navigation}) => {
     return (
-        <FlatList
-            style={styles.list}
-            data={COLOR_PALETTES}
-            keyExtractor={item => item.paletteName}
-            renderItem={({ item }) => (
-                <PalettePreview
-                    handlePress={()=>{
-                        navigation.navigate('ColorPalette', item)
-                    }}
-                    colorPalette={item}
-                />
-            )}
-        />
+        <SafeAreaView>
+            <FlatList
+                style={styles.list}
+                data={COLOR_PALETTES}
+                keyExtractor={item => item.paletteName}
+                renderItem={({ item }) => (
+                    <PalettePreview
+                        handlePress={()=>{
+                            navigation.navigate('ColorPalette', item)
+                        }}
+                        colorPalette={item}
+                    />
+                )}
+            />
+            <Counter />
+            
+            <FetchByUseEffect style={styles.box}/>
+        </SafeAreaView>
     )
 }
 
@@ -65,6 +72,9 @@ const styles = StyleSheet.create({
     list: {
         padding: 20,
         backgroundColor: 'white'
+    },
+    box: {
+        height: 200,
     }
 })
 

@@ -20,10 +20,10 @@ const PalettePreview = ({handlePress, colorPalette}) => {
 }
 
 const styles = StyleSheet.create({
- text: { 
-    fontWeight: 'bold',
-    fontSize: 18,  
-    marginBottom: 10,  
+    text: { 
+        fontWeight: 'bold',
+        fontSize: 18,  
+        marginBottom: 10,  
     },
     box: {
         height: 30,
